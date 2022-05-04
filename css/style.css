@@ -1,13 +1,13 @@
 .box {
   padding: 0.75em;
-  border-radius : 0.5em;
-  border : 1px solid #ddd;
+  border-radius: 0.5em;
+  border: 1px solid #ddd;
   height: auto;
   margin-bottom: 1em;
 }
 
 .warning {
-  color: orange;
+  color: #ffa500;
   font-weight: bold;
 }
 
