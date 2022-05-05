@@ -26,6 +26,7 @@ document
     criticalValue = Number(
       document.querySelector(".criticalLevelSetting").value
     );
+    changeColor();
   });
 
 //add an event listener for when the add button is pressed
@@ -51,10 +52,16 @@ document.querySelector(".addition").addEventListener("click", function () {
   // * display the latest total on the screen
   total = callTotal + smsTotal;
   document.querySelector(".totalSettings").innerHTML = total.toFixed(2);
-
+  changeColor();
+});
+function changeColor() {
+  if (total < criticalValue && total < warningValue) {
+    document.querySelector(".totalSettings").classList.remove("danger");
+    document.querySelector(".totalSettings").classList.remove("warning");
+  }
   if (total !== criticalValue) {
     document.querySelector(".totalSettings").classList.remove("danger");
-  } else if (total !== criticalValue) {
+  } else if (total !== warningValue) {
     document.querySelector(".totalSettings").classList.remove("warning");
   }
 
@@ -63,7 +70,7 @@ document.querySelector(".addition").addEventListener("click", function () {
   } else if (total >= warningValue) {
     document.querySelector(".totalSettings").classList.add("warning");
   }
-});
+}
 //in the event listener get the value from the billItemTypeRadio radio buttons
 // * add the appropriate value to the call / sms total
 // * add the appropriate value to the overall total
