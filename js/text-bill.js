@@ -9,10 +9,10 @@ var smsTotals = 0;
 document.querySelector(".addToBillBtn").addEventListener("click", function () {
   var billTypeEntered = document.querySelector(".billTypeText").value;
   //in the event listener check if the value in the bill type textbox is 'sms' or 'call'
-  if (billTypeEntered === "call") {
+  if (billTypeEntered.toLowerCase() === "call") {
     //add the appropriate value to the running total
     callsTotal += 2.75;
-  } else if (billTypeEntered === "sms") {
+  } else if (billTypeEntered.toLowerCase() === "sms") {
     smsTotals += 0.75;
     // * add nothing for invalid values that is not 'call' or 'sms'.
   } else if (billTypeEntered !== "sms" || billTypeEntered !== "call") {

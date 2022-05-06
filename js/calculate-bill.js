@@ -21,9 +21,9 @@ function calculateBtnClicked() {
   var billTotal = 0;
   var callsAndSms = billString.split(",");
   for (var i = 0; i < callsAndSms.length; i++) {
-    if (callsAndSms[i].trim().includes("call")) {
+    if (callsAndSms[i].trim().toLowerCase().includes("call")) {
       billTotal += 2.75;
-    } else if (callsAndSms[i].trim().includes("sms")) {
+    } else if (callsAndSms[i].trim().toLowerCase().includes("sms")) {
       billTotal += 0.65;
     }
   }
