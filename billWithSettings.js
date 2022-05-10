@@ -64,11 +64,6 @@ function BillWithSettings() {
     }
   }
 
-  // function hasReachedCriticalLevel() {
-  //   if (getTotalCost() < getCriticalLevel()) {
-  //     return getTotalCallCost() + getTotalSmsCost();
-  //   }
-  // }
 
   return {
     setCallCost,
