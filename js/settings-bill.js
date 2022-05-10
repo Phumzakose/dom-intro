@@ -7,30 +7,31 @@
 //get a reference to the 'Update settings' button
 
 // create a variables that will keep track of all the settings
-var calls = 0;
-var sms = 0;
-var criticalValue = 0;
-var warningValue = 0;
-// create a variables that will keep track of all three totals.
-var callTotal = 0;
-var smsTotal = 0;
-var total = 0;
-//add an event listener for when the 'Update settings' button is pressed
 
+//add an event listener for when the 'Update settings' button is pressed
+var settingsInstance = BillWithSettings();
 document
   .querySelector(".updateSettings")
   .addEventListener("click", function () {
-    calls = Number(document.querySelector(".callCostSetting").value);
-    sms = Number(document.querySelector(".smsCostSetting").value);
-    warningValue = Number(document.querySelector(".warningLevelSetting").value);
-    criticalValue = Number(
-      document.querySelector(".criticalLevelSetting").value
+    settingsInstance.setCallCost(
+      Number(document.querySelector(".callCostSetting").value)
+    );
+    settingsInstance.setSmsCost(
+      Number(document.querySelector(".smsCostSetting").value)
+    );
+    //alert(sms);
+    settingsInstance.setWarningLevel(
+      Number(document.querySelector(".warningLevelSetting").value)
+    );
+    settingsInstance.setCriticalLevel(
+      Number(document.querySelector(".criticalLevelSetting").value)
     );
     changeColor();
   });
 
 //add an event listener for when the add button is pressed
 document.querySelector(".addition").addEventListener("click", function () {
+  //alert(settingsInstance.getCallCost());
   var checkedRadioBtn = document.querySelector(
     "input[name='billItemTypeWithSettings']:checked"
   );
@@ -39,37 +40,30 @@ document.querySelector(".addition").addEventListener("click", function () {
     // billItemType will be 'call' or 'sms'
   }
   if (billItemTypeWithSettings === "sms") {
-    if (criticalValue > total) {
-      smsTotal += sms;
-    }
+    settingsInstance.sendSms();
   } else if (billItemTypeWithSettings === "call") {
-    if (criticalValue > total) {
-      callTotal += calls;
-    }
+    settingsInstance.makeCall();
   }
-  document.querySelector(".callTotalSettings").innerHTML = callTotal.toFixed(2);
-  document.querySelector(".smsTotalSettings").innerHTML = smsTotal.toFixed(2);
+  document.querySelector(".callTotalSettings").innerHTML = settingsInstance
+    .getTotalCallCost()
+    .toFixed(2);
+  document.querySelector(".smsTotalSettings").innerHTML = settingsInstance
+    .getTotalSmsCost()
+    .toFixed(2);
   // * display the latest total on the screen
-  total = callTotal + smsTotal;
-  document.querySelector(".totalSettings").innerHTML = total.toFixed(2);
+  //total = callTotal + smsTotal;
+  document.querySelector(".totalSettings").innerHTML = settingsInstance
+    .getTotalCost()
+    .toFixed(2);
   changeColor();
 });
 function changeColor() {
-  if (total < criticalValue && total < warningValue) {
-    document.querySelector(".totalSettings").classList.remove("danger");
-    document.querySelector(".totalSettings").classList.remove("warning");
-  }
-  if (total !== criticalValue) {
-    document.querySelector(".totalSettings").classList.remove("danger");
-  } else if (total !== warningValue) {
-    document.querySelector(".totalSettings").classList.remove("warning");
-  }
-
-  if (total >= criticalValue) {
-    document.querySelector(".totalSettings").classList.add("danger");
-  } else if (total >= warningValue) {
-    document.querySelector(".totalSettings").classList.add("warning");
-  }
+  document.querySelector(".totalSettings").classList.remove("danger");
+  document.querySelector(".totalSettings").classList.remove("warning");
+  // alert(settingsInstance.totalClassName());
+  document
+    .querySelector(".totalSettings")
+    .classList.add(settingsInstance.totalClassName());
 }
 //in the event listener get the value from the billItemTypeRadio radio buttons
 // * add the appropriate value to the call / sms total
